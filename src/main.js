@@ -1059,4 +1059,4 @@ function renderEditForm(el) {
       DAYS.forEach(d => {
 
         updated[d[0]] =
-     
+     // Área de autenticação
