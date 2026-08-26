@@ -538,26 +538,52 @@ async function signup() {
     document.querySelector("#login-message");
 
   if (!email.endsWith("@msm.org.br")) {
-
     message.textContent =
       "O cadastro é permitido somente com e-mail @msm.org.br.";
-
     return;
   }
 
   if (!password || password.length < 6) {
-
     message.textContent =
       "A senha deve possuir pelo menos 6 caracteres.";
+    return;
+  }
 
+  const passwordConfirm = prompt(
+    "Digite novamente sua senha:"
+  );
+
+  if (password !== passwordConfirm) {
+    message.textContent =
+      "As senhas não são iguais.";
+    return;
+  }
+
+  const name = prompt(
+    "Digite seu nome exatamente como aparece no Quadro:"
+  );
+
+  if (!name) {
+    message.textContent =
+      "O nome é necessário para criar a conta.";
+    return;
+  }
+
+  const member = members.find(
+    m =>
+      m.name.trim().toLowerCase() ===
+      name.trim().toLowerCase()
+  );
+
+  if (!member) {
+    message.textContent =
+      "Nome não encontrado no Quadro. Verifique a grafia.";
     return;
   }
 
   if (!supabase) {
-
     message.textContent =
       "Supabase não configurado.";
-
     return;
   }
 
@@ -570,15 +596,17 @@ async function signup() {
       password,
       options: {
         emailRedirectTo:
-          window.location.origin
+          window.location.origin,
+
+        data: {
+          full_name: member.name
+        }
       }
     });
 
   if (error) {
-
     message.textContent =
       error.message;
-
     return;
   }
 
@@ -592,10 +620,9 @@ async function signup() {
   } else {
 
     message.textContent =
-      "Conta criada. Verifique seu e-mail institucional para confirmar.";
+      "Conta criada. Verifique seu e-mail @msm.org.br para confirmar o cadastro.";
   }
 }
-
 async function resetPassword() {
 
   const email =
