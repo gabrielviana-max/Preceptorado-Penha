@@ -172,6 +172,9 @@ function render() {
       <button data-view="atualizar">
         Atualizar meu quadro
       </button>
+      <button data-view="login">
+        Entrar
+    </button>
     </nav>
 
     <main id="content"></main>
