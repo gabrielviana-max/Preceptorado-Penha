@@ -1056,7 +1056,30 @@ function renderEditForm(el) {
           null
       };
 
-      DAYS.forEach(d => {
-
+            DAYS.forEach(d => {
         updated[d[0]] =
-     // Área de autenticação
+          document.querySelector("#" + d[0]).value || null;
+      });
+
+      const idx = members.findIndex(
+        m => m.name === selected.name
+      );
+
+      members[idx] = updated;
+
+      await persist(updated);
+
+      msg.textContent =
+        "Quadro atualizado com sucesso.";
+
+      button.disabled = false;
+      button.textContent = "Salvar alterações";
+
+      setTimeout(
+        () => show("geral"),
+        700
+      );
+    };
+}
+
+// Área de autenticação
