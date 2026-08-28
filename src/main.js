@@ -539,7 +539,7 @@ async function signup() {
 
   if (!email.endsWith("@msm.org.br")) {
     message.textContent =
-      "O cadastro é permitido somente com e-mail @msm.org.br.";
+      "Use seu e-mail institucional @msm.org.br.";
     return;
   }
 
@@ -560,24 +560,12 @@ async function signup() {
   }
 
   const name = prompt(
-    "Digite seu nome exatamente como aparece no Quadro:"
+    "Digite seu nome completo:"
   );
 
-  if (!name) {
+  if (!name || !name.trim()) {
     message.textContent =
-      "O nome é necessário para criar a conta.";
-    return;
-  }
-
-  const member = members.find(
-    m =>
-      m.name.trim().toLowerCase() ===
-      name.trim().toLowerCase()
-  );
-
-  if (!member) {
-    message.textContent =
-      "Nome não encontrado no Quadro. Verifique a grafia.";
+      "O nome é obrigatório.";
     return;
   }
 
@@ -599,7 +587,7 @@ async function signup() {
           window.location.origin,
 
         data: {
-          full_name: member.name
+          full_name: name.trim()
         }
       }
     });
@@ -620,7 +608,7 @@ async function signup() {
   } else {
 
     message.textContent =
-      "Conta criada. Verifique seu e-mail @msm.org.br para confirmar o cadastro.";
+      "Cadastro realizado! Verifique seu e-mail para confirmar a conta.";
   }
 }
 async function resetPassword() {
